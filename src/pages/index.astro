@@ -1,0 +1,35 @@
+---
+import {FeedQuery} from '../queries/FeedQuery'
+import Feed from '../components/feed'
+import Navigation from '../components/navigation.astro'
+
+const {data} = await fetch(import.meta.env.VITE_GRAPHQL_ENDPOINT, {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	body: JSON.stringify({query: `query FeedQuery {
+		feed {
+			id
+			url
+			description
+			createdAt
+		}
+	}`}),
+}).then((res) => res.json())
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<Navigation />
+		<Feed feed={data.feed}  />
+	</body>
+</html>
