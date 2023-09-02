@@ -1,0 +1,10 @@
+---
+import Main from "layout:main.astro"
+
+const linkId = Astro.url.searchParams.get('linkId')
+
+---
+
+<Main>
+    {linkId}
+</Main>
