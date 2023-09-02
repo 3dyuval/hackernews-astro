@@ -1,0 +1,37 @@
+---
+import {formatDistanceToNow} from 'date-fns'
+
+const { link , index = '' } = Astro.props
+---
+
+<div class="flex text-sm">
+    <div class="">{index && <span class="rank">{index}.</span>}</div>
+    <div class="">
+      <a role="button" onclick="onVote">
+        <div class="votearrow" />
+      </a>
+    </div>
+    <div class="">
+      <span>
+        <a href={link.url}>{link.description}</a>
+        <span class="text-zinc-500">
+          {` `}
+          <a href={link.url} target="_blank">
+            <span>({link.url})</span>
+          </a>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div>
+    <div class="pt-2 text-xs text-zinc-500  flex flex-row">
+      <span>{formatDistanceToNow(new Date(link.createdAt))}</span>
+      <span> next | context | parent | </span>
+      <a href={`/link?linkId=${link.id}`}>
+        <p class="max-w-sm truncate text-ellipsis">
+          on: {link.description}
+        </p>
+      </a>
+    </div>
+    <p class="max-h-24 truncate text-overflow-ellipsis">{link.body}</p>
+  </div>

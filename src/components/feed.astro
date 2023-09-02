@@ -1,5 +1,5 @@
 ---
-import Link from './feedLinkItem.astro'
+import LinkBody from './link-body.astro'
 import client, { gql } from '../GraphQLClient'
 
 const {data, error} = await client.query(gql`
@@ -21,8 +21,8 @@ if (error) {
 
 <ul>
 
-	{data.feed.map(i => {
-		return <li><Link {...i} /></li>
+	{data.feed.map((link, index) => {
+		return <li><LinkBody link={link} index={index}  /></li>
 	})}
 
 </ul>

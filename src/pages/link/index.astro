@@ -1,7 +1,9 @@
 ---
-export const prerender = false
+import 'asset:style.scss'
+export const prerender = true
 import Main from 'layout:main.astro'
-
+import Comments from 'component:comments.tsx'
+import LinkBody from 'component:link-body.astro'
 const linkId = Number(Astro.url.searchParams.get('linkId'))
 
 import client, { gql } from '../../GraphQLClient'
@@ -46,7 +48,9 @@ const { data, error } = await client.query(LINK_QUERY, { linkId })
 	<meta name='generator' content={Astro.generator} />
 	<title>{data.link.description} | Hackernews Clone</title>
 	<Main>
+		<LinkBody link={data.link} />
+		<h2>Comments</h2>
+		<Comments comments={data.link.comments} />
 		{error && JSON.stringify(error)}
-		{data && JSON.stringify(data.link)}
 	</Main>
 </html>
