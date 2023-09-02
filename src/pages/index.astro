@@ -1,8 +1,21 @@
 ---
-import Main from "../layouts/main.astro"
-import Feed from '../components/feed.astro';
----
+export const prerender = false
+import Main from '../layouts/main.astro'
+import Feed from '../components/feed.astro'
 
-<Main>
-    <Feed />
-</Main>
+--- 
+
+<html lang='en'>
+	<head>
+		<meta charset='utf-8' />
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+		<meta name='viewport' content='width=device-width' />
+		<meta name='generator' content={Astro.generator} />
+		<title>Hackernews Clone</title>
+	</head>
+	<body>
+		<Main>
+			<Feed />
+		</Main>
+	</body>
+</html>

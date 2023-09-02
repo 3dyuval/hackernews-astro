@@ -6,4 +6,4 @@ const client = new Client({
 })
 
 export default client;
-export  { gql } from '@urql/core';
+export { gql } from '@urql/core';

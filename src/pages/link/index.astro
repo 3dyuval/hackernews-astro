@@ -1,0 +1,52 @@
+---
+export const prerender = false
+import Main from 'layout:main.astro'
+
+const linkId = Number(Astro.url.searchParams.get('linkId'))
+
+import client, { gql } from '../../GraphQLClient'
+
+const LINK_QUERY = gql`
+	query LinkPage($linkId: Int!) {
+		link(id: $linkId) {
+			...LinkContent
+			comments {
+				...CommentContent
+				parent {
+					type: __typename
+					... on Comment {
+						id
+					}
+				}
+			}
+		}
+	}
+
+	fragment LinkContent on Link {
+		id
+		url
+		description
+		createdAt
+		userId
+	}
+
+	fragment CommentContent on Comment {
+		id
+		body
+		createdAt
+	}
+`
+
+const { data, error } = await client.query(LINK_QUERY, { linkId })
+---
+<html lang='en'>
+	<meta charset='utf-8' />
+	<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+	<meta name='viewport' content='width=device-width' />
+	<meta name='generator' content={Astro.generator} />
+	<title>{data.link.description} | Hackernews Clone</title>
+	<Main>
+		{error && JSON.stringify(error)}
+		{data && JSON.stringify(data.link)}
+	</Main>
+</html>

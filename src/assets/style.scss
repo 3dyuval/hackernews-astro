@@ -1,0 +1,80 @@
+
+:root {
+    --hacknews-main-bg-color: rgb(246, 246, 239);
+    --hackernews-color-primary-lightest: #ff923c;
+    --hackernews-color-primary-lighter: #ff7e17;
+    --hackernews-color-primary-light: #ff770b;
+    --hackernews-color-primary: #f26b00;
+    --hackernews-color-primary-dark: #da6000;
+    --hackernews-color-primary-darker: #ce5b00;
+    --hackernews-color-primary-darkest: #a94b00;
+  
+    --hackernews-color-neutral: #666666;
+  
+    --alert-color-info: #3578e5;
+    --alert-color-info-secondary: #54c7ec;
+  
+    --alert-color-default: #ebedf0;
+    --alert-color-success: #1f966b;
+    --alert-color-warning: #ffba00;
+    --alert-color-danger: #fa383e;
+  }
+  
+  .notistack-MuiContent-default {
+    background-color: var(--alert-color-default);
+  }
+  .notistack-MuiContent-success {
+    background-color: var(--alert-color-success);
+  }
+  .notistack-MuiContent-error {
+    background-color: var(--alert-color-danger);
+  }
+  .notistack-MuiContent-info {
+    background-color: var(--alert-color-info);
+  }
+  .notistack-MuiContent-warning {
+    background-color: var(--alert-color-warning);
+  }
+  
+  body {
+    font-size: 14px;
+  }
+
+  .app {
+    max-width: 1080px;
+    margin: 8px auto;
+  }
+  
+  main {
+    background-color: var(--hacknews-main-bg-color);
+    padding: 0 4px;
+  }
+  
+  a[role="button"] {
+    text-decoration: underline;
+    s &:hover {
+      cursor: pointer;
+    }
+  }
+  
+  div.votearrow {
+    margin: 0 0.4rem;
+    margin-top: 0.4rem;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid var(--hackernews-color-neutral);
+    transition: border-bottom 100ms ease;
+    &:hover {
+      border-bottom: 8px solid var(--hackernews-color-primary-lightest);
+    }
+  }
+  
+  textarea {
+    font-family: monospace;
+    font-size: 10pt;
+    resize: both;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.95);
+  }
+  

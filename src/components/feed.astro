@@ -11,7 +11,7 @@ query FeedQuery {
 			createdAt
 		}
 	}
-`, {}).toPromise()
+`, {})
 
 if (error) {
 	console.error(error)
@@ -19,7 +19,10 @@ if (error) {
 
 ---
 
+<ul>
 
-{data.feed.map(i => {
-	return <Link {...i} />
-})}
+	{data.feed.map(i => {
+		return <li><Link {...i} /></li>
+	})}
+
+</ul>
