@@ -1,28 +1,32 @@
 ---
+export const prerender = true
 import LinkBody from './link-body.astro'
 import client, { gql } from '../GraphQLClient'
 
-const {data, error} = await client.query(gql`
-query FeedQuery {
-		feed {
-			id
-			url
-			description
-			createdAt
-		}
-	}
-`, {})
-
-if (error) {
-	console.error(error)
-}
-
+const { data, error } = await client.query(
+  gql/* GraphQL */ `
+    #graphql
+    query FeedQuery {
+      feed {
+        id
+        url
+        description
+        createdAt
+      }
+    }
+  `,
+  {},
+)
 ---
 
 <ul>
-
-	{data.feed.map((link, index) => {
-		return <li><LinkBody link={link} index={index}  /></li>
-	})}
-
+  {
+    data?.feed.map((link, index) => {
+      return (
+        <li>
+          <LinkBody link={link} index={index} transition:name="link" />
+        </li>
+      )
+    })
+  }
 </ul>

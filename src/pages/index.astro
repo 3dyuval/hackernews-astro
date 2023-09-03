@@ -1,4 +1,5 @@
 ---
+import {ViewTransitions} from 'astro:transitions'
 import 'asset:style.scss'
 export const prerender = false
 import Main from '../layouts/main.astro'
@@ -13,6 +14,7 @@ import Feed from '../components/feed.astro'
 		<meta name='viewport' content='width=device-width' />
 		<meta name='generator' content={Astro.generator} />
 		<title>Hackernews Clone</title>
+		<ViewTransitions/>
 	</head>
 	<body>
 		<Main>

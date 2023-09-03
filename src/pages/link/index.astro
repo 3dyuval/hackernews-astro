@@ -1,56 +1,66 @@
 ---
+import { ViewTransitions } from 'astro:transitions'
 import 'asset:style.scss'
 export const prerender = true
 import Main from 'layout:main.astro'
 import Comments from 'component:comments.tsx'
 import LinkBody from 'component:link-body.astro'
 const linkId = Number(Astro.url.searchParams.get('linkId'))
+import client from '../../GraphQLClient'
+import { graphql } from 'src/generated'
 
-import client, { gql } from '../../GraphQLClient'
+const LINK_QUERY = graphql(/* GraphQL */ `
+  query LinkPage($linkId: Int!) {import { graphql } from 'src/generated'
 
-const LINK_QUERY = gql`
-	query LinkPage($linkId: Int!) {
-		link(id: $linkId) {
-			...LinkContent
-			comments {
-				...CommentContent
-				parent {
-					type: __typename
-					... on Comment {
-						id
-					}
-				}
-			}
-		}
-	}
+    link(id: $linkId) {
+      ...LinkContent
+      comments {
+        ...CommentContent
+        parent {
+          type: __typename
+          ... on Comment {
+            id
+          }
+        }
+      }
+    }
+  }
 
-	fragment LinkContent on Link {
-		id
-		url
-		description
-		createdAt
-		userId
-	}
+  fragment LinkContent on Link {
+    id
+    url
+    description
+    createdAt
+    userId
+  }
 
-	fragment CommentContent on Comment {
-		id
-		body
-		createdAt
-	}
-`
+  fragment CommentContent on Comment {
+    id
+    body
+    createdAt
+  }
+`)
 
 const { data, error } = await client.query(LINK_QUERY, { linkId })
 ---
-<html lang='en'>
-	<meta charset='utf-8' />
-	<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-	<meta name='viewport' content='width=device-width' />
-	<meta name='generator' content={Astro.generator} />
-	<title>{data.link.description} | Hackernews Clone</title>
-	<Main>
-		<LinkBody link={data.link} />
-		<h2>Comments</h2>
-		<Comments comments={data.link.comments} />
-		{error && JSON.stringify(error)}
-	</Main>
+
+<html lang="en">
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{data.link?.description} | Hackernews Clone</title>
+  <ViewTransitions />
+  <Main>
+    {
+      data.link && (
+        <>
+          <LinkBody link={data.link} transition:name="link" />
+          <h2>Comments</h2>
+          <Comments comments={data.link.comments} />
+        </>
+      )
+    }
+    {error && JSON.stringify(error)}
+  </Main>
 </html>

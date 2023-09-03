@@ -4,10 +4,19 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "baseUrl": ".",
+    "plugins": [{ "name": "@astrojs/ts-plugin" }],
     "paths": {
       "asset:*": ["src/assets/*?url"],
       "component:*": ["src/components/*"],
-      "layout:*": ["src/layouts/*"],
+      "layout:*": ["src/layouts/*"]
     }
   },
+  "include": [
+    "src/**/*.astro",
+    "src/**/*.js",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.svelte",
+    "src/**/*.mdx"
+  ]
 }
